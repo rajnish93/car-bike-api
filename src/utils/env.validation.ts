@@ -1,5 +1,6 @@
 import { plainToInstance } from 'class-transformer';
 import {
+  IsBoolean,
   IsDefined,
   IsEnum,
   IsNumber,
@@ -28,6 +29,38 @@ class EnvironmentVariables {
   @Min(5000)
   @Max(65535)
   PORT: number;
+
+  @IsDefined()
+  @IsString()
+  TYPEORM_HOST: string;
+
+  @IsDefined()
+  @IsNumber()
+  TYPEORM_PORT: number;
+
+  @IsDefined()
+  @IsString()
+  TYPEORM_USERNAME: string;
+
+  @IsDefined()
+  @IsString()
+  TYPEORM_PASSWORD: string;
+
+  @IsDefined()
+  @IsString()
+  TYPEORM_DATABASE: string;
+
+  @IsDefined()
+  @IsString()
+  TYPEORM_ENTITIES: string;
+
+  @IsDefined()
+  @IsBoolean()
+  TYPEORM_SYNCHRONIZE: boolean;
+
+  @IsDefined()
+  @IsBoolean()
+  TYPEORM_LOGGING: boolean;
 }
 
 export function validate(config: Record<string, unknown>) {

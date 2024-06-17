@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  postgres:
+    container_name: postgres_dev
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=mydatabase
+      - PGDATA=/var/lib/postgresql/data
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgresql/postgresql.conf:/etc/postgresql/postgresql.conf:ro # Mount postgresql.conf
+      - ./logs:/var/volume/db-files/log # Mount log directory
+    networks:
+      - postgres_network
+
+volumes:
+  postgres_data:
+
+networks:
+  postgres_network:
+    driver: bridge
