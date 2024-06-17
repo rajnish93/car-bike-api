@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { validate } from './utils/env.validation';
 import { DatabaseModule } from './modules/database/database.module';
 import { GroupsModule } from './modules/groups/groups.module';
+import { EmployeesModule } from './modules/employees/employees.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { GroupsModule } from './modules/groups/groups.module';
     }),
     DatabaseModule,
     GroupsModule,
+    EmployeesModule,
   ],
   controllers: [],
   providers: [],
