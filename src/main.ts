@@ -6,9 +6,12 @@ import helmet from 'helmet';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { redirectMiddleware } from './utils/redirect.middleware';
 import { ConfigService } from '@nestjs/config';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  // ValidationPipe at the application level, thus ensuring all endpoints are protected from receiving incorrect data.
+  app.useGlobalPipes(new ValidationPipe());
   const configService = app.get(ConfigService);
   const appPrefix = configService.get('API_PREFIX');
 
