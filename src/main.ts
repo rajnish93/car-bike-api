@@ -25,6 +25,7 @@ async function bootstrap() {
     .setTitle('Cars & Bike Rental')
     .setDescription('Cars & Bike Rental API description')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, options);
