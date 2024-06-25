@@ -19,6 +19,10 @@ async function bootstrap() {
   app.use(compression());
   app.use(helmet());
   app.use(nocache());
+  app.enableCors({
+    origin: true,
+    credentials: true,
+  });
 
   const swaggerUrl = `${appPrefix}/docs`;
   const options = new DocumentBuilder()
