@@ -23,7 +23,7 @@ export class UsersService {
     });
   }
 
-  async create(userParams: Partial<User>): Promise<User> {
+  async create(userParams: Partial<User>): Promise<Partial<User>> {
     const { email, firstName, lastName, password } = userParams;
     // Create a new user entity based on the DTO
     const newUser = this.usersRepository.create({
@@ -34,7 +34,17 @@ export class UsersService {
     });
 
     // Save the new user to the database
-    return await this.usersRepository.save(newUser);
+    const savedUser = await this.usersRepository.save(newUser);
+
+    return this.stripSensitiveFields(savedUser);
+  }
+
+  private stripSensitiveFields(user: User): Partial<User> {
+    const sensitiveFields = ['password', 'status', 'source', 'avatarId'];
+    for (const field of sensitiveFields) {
+      delete user[field];
+    }
+    return user;
   }
 
   async addAvatar(userId: string, imageBuffer: Buffer, filename: string) {
