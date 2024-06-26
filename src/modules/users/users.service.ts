@@ -71,6 +71,6 @@ export class UsersService {
       await this.loadFileService.remove(oldAvatarId);
     }
 
-    return avatar.id;
+    return { message: 'Avatar updated successfully' };
   }
 }

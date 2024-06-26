@@ -1,7 +1,5 @@
 import {
   Controller,
-  MaxFileSizeValidator,
-  ParseFilePipe,
   Post,
   UploadedFile,
   UseGuards,
@@ -13,8 +11,8 @@ import { UsersService } from './users.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { ApiConsumes, ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { User } from 'src/decorators/user/user.decorator';
+import { ImageValidator } from 'src/utils/validators/imageValidator';
 
-const MAX_AVATAR_FILE_SIZE = 2 * 1024 * 1024; // 2MB in bytes
 @ApiTags('Users')
 @Controller('users')
 export class UsersController {
@@ -39,13 +37,7 @@ export class UsersController {
   })
   async addAvatar(
     @User() user,
-    @UploadedFile(
-      new ParseFilePipe({
-        validators: [
-          new MaxFileSizeValidator({ maxSize: MAX_AVATAR_FILE_SIZE }),
-        ],
-      }),
-    )
+    @UploadedFile(new ImageValidator())
     uploadedFile: Express.Multer.File,
   ) {
     return this.usersService.addAvatar(
