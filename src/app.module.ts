@@ -4,6 +4,9 @@ import { validate } from './utils/env.validation';
 import { DatabaseModule } from './modules/database/database.module';
 import { GroupsModule } from './modules/groups/groups.module';
 import { EmployeesModule } from './modules/employees/employees.module';
+import { UsersModule } from './modules/users/users.module';
+import { LoadFileModule } from './modules/load-file/load-file.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -16,6 +19,9 @@ import { EmployeesModule } from './modules/employees/employees.module';
     DatabaseModule,
     GroupsModule,
     EmployeesModule,
+    UsersModule,
+    LoadFileModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
