@@ -64,7 +64,7 @@ export class UsersService {
     const oldAvatarId = user.avatarId;
     // Update the user's avatarId
     user.avatarId = avatar.id;
-    await this.usersRepository.save(user);
+    await this.usersRepository.update(userId, { avatarId: avatar.id });
 
     // Remove the previous avatar file if exists
     if (oldAvatarId) {

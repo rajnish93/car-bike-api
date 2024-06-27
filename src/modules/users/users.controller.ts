@@ -41,7 +41,7 @@ export class UsersController {
     uploadedFile: Express.Multer.File,
   ) {
     return this.usersService.addAvatar(
-      user.id,
+      user.userId,
       uploadedFile.buffer,
       uploadedFile.originalname,
     );
