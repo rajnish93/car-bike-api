@@ -1,5 +1,6 @@
 import {
   Controller,
+  Get,
   Post,
   UploadedFile,
   UseGuards,
@@ -45,5 +46,12 @@ export class UsersController {
       uploadedFile.buffer,
       uploadedFile.originalname,
     );
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @Get('profile')
+  getProfile(@User() user) {
+    return this.usersService.getUserInfo(user.userId);
   }
 }

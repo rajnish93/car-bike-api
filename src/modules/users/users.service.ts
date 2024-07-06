@@ -73,4 +73,14 @@ export class UsersService {
 
     return { message: 'Avatar updated successfully' };
   }
+
+  async getUserInfo(userId: string) {
+    const user = await this.usersRepository.findOne({ where: { id: userId } });
+    return {
+      userId: user.id,
+      userEmail: user.email,
+      userName: `${user.firstName} ${user.lastName}`,
+      phone: user.phone,
+    };
+  }
 }
