@@ -6,12 +6,14 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { GroupsService } from './groups.service';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -19,12 +21,15 @@ import {
 } from '@nestjs/swagger';
 import { Group } from './entities/group.entity';
 import { DeleteResult } from 'typeorm';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @ApiTags('Groups')
 @Controller('groups')
 export class GroupsController {
   constructor(private readonly groupsService: GroupsService) {}
 
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Post()
   @ApiCreatedResponse({ type: Group })
   @ApiBadRequestResponse({ description: 'Data validation error' })
