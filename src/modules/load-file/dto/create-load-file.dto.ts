@@ -1,9 +1,9 @@
 import { IsNotEmpty } from 'class-validator';
 
 export class CreateLoadFileDto {
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'File Name should not be empty' })
   filename: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Data should not be empty' })
   data: Uint8Array | Buffer | string;
 }

@@ -7,6 +7,7 @@ import { EmployeesModule } from './modules/employees/employees.module';
 import { UsersModule } from './modules/users/users.module';
 import { LoadFileModule } from './modules/load-file/load-file.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { CompanyModule } from './modules/company/company.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { AuthModule } from './modules/auth/auth.module';
     UsersModule,
     LoadFileModule,
     AuthModule,
+    CompanyModule,
   ],
   controllers: [],
   providers: [],

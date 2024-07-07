@@ -3,24 +3,25 @@ import { Transform } from 'class-transformer';
 import {
   IsEmail,
   IsNotEmpty,
+  IsOptional,
   IsString,
   MaxLength,
   MinLength,
 } from 'class-validator';
 
-export class CreateUserDto {
+export class CompanyAdminDto {
   @ApiProperty({
     example: 'Rajnish Singh',
-    description: 'The name of the User',
+    description: 'Name of the administrator.',
   })
   @IsString({ message: 'Name must be a string' })
   @IsNotEmpty({ message: 'Name should not be empty' })
   @Transform(({ value }) => value?.trim())
-  name: string;
+  readonly name: string;
 
   @ApiProperty({
-    example: 'rajnish@example.com',
-    description: 'The email address of the User.',
+    example: 'admin@example.com',
+    description: 'The email address of the administrator.',
   })
   @IsEmail({}, { message: 'Invalid email format' })
   @Transform(({ value }) => value?.toLowerCase()?.trim())
@@ -36,4 +37,18 @@ export class CreateUserDto {
   @MinLength(5, { message: 'Password should contain more than 5 letters' })
   @MaxLength(100, { message: 'Password length should not be more than 100 ' })
   readonly password: string;
+
+  @ApiProperty({
+    example: 'Test Company',
+    description: 'Name of the Company',
+  })
+  @IsString({ message: 'Company name must be a string' })
+  @IsNotEmpty({ message: 'Company name should not be empty' })
+  @Transform(({ value }) => value?.trim())
+  readonly companyName: string;
+
+  @IsString()
+  @IsOptional()
+  @Transform(({ value }) => value?.trim())
+  readonly companySize: string;
 }

@@ -1,14 +1,24 @@
-import { Controller, Get, StreamableFile, Res, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  StreamableFile,
+  Res,
+  Param,
+  UseGuards,
+} from '@nestjs/common';
 import { LoadFileService } from './load-file.service';
 import type { Response } from 'express';
 import { Readable } from 'stream';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @ApiTags('File')
 @Controller('load-file')
 export class LoadFileController {
   constructor(private readonly loadFileService: LoadFileService) {}
 
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @Get(':id')
   async findOne(
     @Param('id') id: string,

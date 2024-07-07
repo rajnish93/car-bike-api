@@ -83,4 +83,8 @@ export class UsersService {
       phone: user.phone,
     };
   }
+
+  async getCount(): Promise<number> {
+    return this.usersRepository.count();
+  }
 }

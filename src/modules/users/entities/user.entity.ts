@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Permission } from 'src/modules/groups/entities/group.entity';
+import { Group } from 'src/modules/groups/entities/group.entity';
 import { LoadFile } from 'src/modules/load-file/entities/load-file.entity';
 import { BaseEntity } from 'src/utils/base.entity';
 import {
@@ -7,24 +7,16 @@ import {
   BeforeUpdate,
   Column,
   Entity,
+  Index,
   JoinColumn,
+  ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-
-enum STATUS_TYPE {
-  INVITED = 'INVITED',
-  VERIFIED = 'VERIFIED',
-  ACTIVE = 'ACTIVE',
-  ARCHIVED = 'ARCHIVED',
-}
-
-enum SOURCE_TYPE {
-  INVITE = 'INVITE',
-  GOOGLE = 'GOOGLE',
-}
+import { Company } from 'src/modules/company/entities/company.entity';
+import { SOURCE_TYPE, STATUS_TYPE } from 'src/helpers/user.helpers';
 
 @Entity()
 @Unique(['email'])
@@ -79,9 +71,12 @@ export class User extends BaseEntity {
   })
   source: SOURCE_TYPE;
 
-  @Column({ type: 'enum', enum: Permission, array: true, nullable: true })
-  @ApiProperty({ enum: Permission, isArray: true })
-  permissions: Permission[];
+  // @Column({ type: 'enum', enum: Permission, array: true, nullable: true })
+  // @ApiProperty({ enum: Permission, isArray: true })
+  // permissions: Permission[];
+  // @Column({ type: 'enum', enum: Permission, array: true, nullable: true })
+  // @ApiProperty({ enum: Permission, isArray: true })
+  // permissions: Permission[];
 
   @Column({ name: 'avatar_id', nullable: true, default: null })
   avatarId?: string;
@@ -91,4 +86,25 @@ export class User extends BaseEntity {
     nullable: true,
   })
   avatar?: LoadFile;
+
+  // @Column({ nullable: true })
+  // designation: string;
+
+  @Column({ nullable: true })
+  companyId: string;
+
+  @ManyToOne(() => Company, (company) => company.users, {
+    onDelete: 'CASCADE',
+  })
+  @Index({ where: `"companyId" IS NOT NULL` })
+  company: Company;
+
+  @Column()
+  groupId: string;
+
+  @ManyToOne(() => Group, (group) => group.users, {
+    onDelete: 'CASCADE',
+  })
+  @Index({ where: `"groupId" IS NOT NULL` })
+  group: Group;
 }
