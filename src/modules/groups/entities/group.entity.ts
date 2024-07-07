@@ -1,14 +1,17 @@
-import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import {
+  Column,
+  Entity,
+  Index,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  Unique,
+} from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { BaseEntity } from 'src/utils/base.entity';
-
-export enum Permission {
-  // Group
-  GROUP_CREATE = 'GROUP_CREATE',
-  GROUP_DELETE = 'GROUP_DELETE',
-  GROUP_UPDATE = 'GROUP_UPDATE',
-  GROUP_GET = 'GROUP_GET', // only for SuperAdmin to prevent regular user to access groups.
-}
+import { Company } from 'src/modules/company/entities/company.entity';
+import { User } from 'src/modules/users/entities/user.entity';
+import { Permission } from '../../../helpers/permission.enum';
 
 export enum GROUP_TAGS {
   USER_MANAGEMENT = 'USER_MANAGEMENT',
@@ -56,4 +59,18 @@ export class Group extends BaseEntity {
     default: GROUP_TYPE.MANAGMENT,
   })
   type: GROUP_TYPE;
+
+  @Column({ nullable: true })
+  companyId: string;
+
+  @ManyToOne(() => Company, (company) => company.groups, {
+    onDelete: 'CASCADE',
+  })
+  @Index({ where: `"companyId" IS NOT NULL` })
+  company: Company;
+
+  @OneToMany(() => User, (user) => user.group, {
+    onDelete: 'CASCADE',
+  })
+  users: User[];
 }

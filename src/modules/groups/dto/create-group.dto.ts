@@ -4,14 +4,17 @@ import {
   IsBoolean,
   IsDefined,
   IsEnum,
+  IsNotEmpty,
   IsString,
 } from 'class-validator';
-import { GROUP_TAGS, Permission } from '../entities/group.entity';
+import { GROUP_TAGS } from '../entities/group.entity';
+import { Permission } from '../../../helpers/permission.enum';
 
 export class CreateGroupDto {
   @ApiProperty()
   @IsDefined()
-  @IsString()
+  @IsString({ message: 'Group Name must be a string' })
+  @IsNotEmpty({ message: 'Group Name should not be empty' })
   readonly name: string;
 
   @ApiProperty({ enum: Permission, isArray: true })

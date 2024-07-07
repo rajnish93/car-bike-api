@@ -1,0 +1,12 @@
+export enum STATUS_TYPE {
+  INVITED = 'INVITED',
+  VERIFIED = 'VERIFIED',
+  ACTIVE = 'ACTIVE',
+  ARCHIVED = 'ARCHIVED',
+}
+
+export enum SOURCE_TYPE {
+  INVITE = 'INVITE',
+  GOOGLE = 'GOOGLE',
+  SIGNUP = 'SIGNUP',
+}

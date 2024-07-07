@@ -37,12 +37,16 @@ export class GroupsController {
     return this.groupsService.create(createGroupDto);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Get()
   @ApiOkResponse({ isArray: true, type: Group })
   findAll() {
     return this.groupsService.findAll();
   }
 
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   @ApiOkResponse({ type: Group })
   @ApiNotFoundResponse({ description: 'Entity with given ID not found' })
@@ -50,6 +54,8 @@ export class GroupsController {
     return this.groupsService.findOne(id);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   @ApiOkResponse({ type: Group })
   @ApiBadRequestResponse({ description: 'Data validation error' })
@@ -58,6 +64,8 @@ export class GroupsController {
     return this.groupsService.update(id, updateGroupDto);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   @ApiOkResponse({ type: DeleteResult })
   @ApiNotFoundResponse({ description: 'Entity with given ID not found' })
