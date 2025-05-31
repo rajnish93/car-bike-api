@@ -8,6 +8,8 @@ import { UsersModule } from './modules/users/users.module';
 import { LoadFileModule } from './modules/load-file/load-file.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { CompanyModule } from './modules/company/company.module';
+import { VehicleModule } from './modules/vehicle/vehicle.module';
+import { BookingModule } from './modules/booking/booking.module';
 
 @Module({
   imports: [
@@ -24,6 +26,8 @@ import { CompanyModule } from './modules/company/company.module';
     LoadFileModule,
     AuthModule,
     CompanyModule,
+    VehicleModule,
+    BookingModule,
   ],
   controllers: [],
   providers: [],

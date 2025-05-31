@@ -10,12 +10,14 @@ import {
   Index,
   JoinColumn,
   ManyToOne,
+  OneToMany, // Import OneToMany
   OneToOne,
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Company } from 'src/modules/company/entities/company.entity';
+import { Booking } from 'src/modules/booking/entities/booking.entity'; // Import Booking entity
 import { SOURCE_TYPE, STATUS_TYPE } from 'src/helpers/user.helpers';
 
 @Entity()
@@ -107,4 +109,7 @@ export class User extends BaseEntity {
   })
   @Index({ where: `"groupId" IS NOT NULL` })
   group: Group;
+
+  @OneToMany(() => Booking, (booking) => booking.user)
+  bookings: Booking[];
 }

@@ -1,6 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Group } from 'src/modules/groups/entities/group.entity';
 import { User } from 'src/modules/users/entities/user.entity';
+import { Vehicle } from 'src/modules/vehicle/entities/vehicle.entity';
+import { Booking } from 'src/modules/booking/entities/booking.entity'; // Import Booking entity
 import { BaseEntity } from 'src/utils/base.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
@@ -27,4 +29,10 @@ export class Company extends BaseEntity {
 
   @OneToMany(() => User, (user) => user.company)
   users: User[];
+
+  @OneToMany(() => Vehicle, (vehicle) => vehicle.company)
+  vehicles: Vehicle[];
+
+  @OneToMany(() => Booking, (booking) => booking.company)
+  bookings: Booking[];
 }
